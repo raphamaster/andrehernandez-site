@@ -351,16 +351,12 @@
             para que o Dr. André possa assumir o acompanhamento.
           </p>
           <div class="space-y-2 text-deepblue/80">
-            <p><strong class="font-semibold text-midnight">Telefone:</strong> (11) 0000-0000</p>
+            <p><strong class="font-semibold text-midnight">Telefone:</strong> (17) 99201-9665</p>
             <p><strong class="font-semibold text-midnight">E-mail:</strong> contato@andrehernandez.adv.br</p>
             <p class="text-sm text-deepblue/70">Atendimento de segunda a sexta, das 9h às 18h, com plantão Penal 24h.</p>
           </div>
         </div>
-        <form
-          class="space-y-4"
-          action="https://formspree.io/f/seu-form-id"
-          method="POST"
-        >
+        <form id="form-contato" ="space-y-4">
           <div>
             <label for="nome" class="block text-sm font-semibold text-midnight">Nome completo</label>
             <input
@@ -488,5 +484,48 @@
     </a>
 
     <script src="js/main.js" defer></script>
+
+    <script>
+
+      document.getElementById("form-contato").addEventListener("submit", async function(e){
+
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        const data = {
+          nome: formData.get("nome"),
+          email: formData.get("email"),
+          telefone: formData.get("telefone"),
+          assunto: formData.get("assunto"),
+          mensagem: formData.get("mensagem")
+        };
+
+        try {
+
+          const response = await fetch("sparkling-shadow-41e9.raphael-rfranco.workers.dev", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          });
+
+          if(response.ok){
+            alert("Mensagem enviada com sucesso!");
+            this.reset();
+          } else {
+            alert("Erro ao enviar mensagem.");
+          }
+
+        } catch(error){
+          alert("Erro de conexão.");
+        }
+
+      });
+
+</script>
+
+
   </body>
 </html>
